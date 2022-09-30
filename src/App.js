@@ -70,6 +70,12 @@ function SignIn() {
       });
     }
   };
+  const loginGuest = (e) => {
+    auth.signInWithEmailAndPassword("guest@guest.guest", "guestguest");
+    if (error) {
+      alert(error);
+    }
+  };
   const [popup, setPopup] = useState(false);
   return (
     <>
@@ -115,6 +121,10 @@ function SignIn() {
             <p>
               Don't have an account?{" "}
               <span onClick={() => setPopup(true)}>Sign up here!</span>
+            </p>
+            <p className="guest-login">
+              Need to look quickly?{" "}
+              <span onClick={loginGuest}>Login as guest here!</span>
             </p>
           </div>
           {popup && (
@@ -213,7 +223,7 @@ function ChatRoom() {
         <main>
           {messages &&
             messages.map((msg) => <ChatMessage key={msg.id} message={msg} />)}
-          <span ref={dummy}></span>
+          <span ref={dummy} className="dummy"></span>
         </main>
 
         <form onSubmit={sendMessage} className="sendMessageDiv">
@@ -242,7 +252,7 @@ function ChatMessage(props) {
   return (
     <>
       <div className={`message ${messageClass}`}>
-        <img src={photoURL} alt="" />
+        <img src={photoURL || ""} alt="profile display" />
         <p>{text}</p>
       </div>
     </>

@@ -97,7 +97,14 @@ main::-webkit-scrollbar-thumb {
   background-color: rgb(56, 56, 143);
   width: 20%;
 }
-
+.guest-login {
+  padding: 0;
+  margin: 0 0 10px 0;
+  font-size: 0.85rem;
+}
+.dummy {
+  padding-bottom: 10px;
+}
 .sendMessageDiv input {
   line-height: 1.5;
   width: 80%;
@@ -160,6 +167,13 @@ p {
   color: black;
 }
 
+.message img {
+  width: 45px;
+  border-radius: 50%;
+}
+.message img {
+  margin: 0 5px;
+}
 .sign-in {
   display: flex;
   align-items: center;
