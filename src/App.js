@@ -2,7 +2,7 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import { motion } from "framer-motion";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { AiOutlineMail } from "react-icons/ai";
@@ -170,14 +170,18 @@ function SignIn() {
 
 function SignOut() {
   return (
-    auth.currentUser && <button onClick={() => auth.signOut()}>Sign Out</button>
+    auth.currentUser && (
+      <button onClick={() => auth.signOut()} className="sign-out-btn">
+        Sign Out
+      </button>
+    )
   );
 }
 
 /************************************************************************* */
 
 function ChatRoom() {
-  const messagesRef = firestore.collection("messages");
+  const messagesRef = firestore.collection("main");
   const query = messagesRef.orderBy("createdAt").limit(25);
 
   const [messages] = useCollectionData(query, { idField: "id" });
@@ -195,44 +199,50 @@ function ChatRoom() {
       photoURL,
     });
     setFormValue("");
-    dummy.current.scrollIntoView({ behavior: "smooth" });
   };
-
+  useEffect(() => {
+    dummy.current.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
   const dummy = useRef();
   return (
-    <>
-      <main>
-        {messages &&
-          messages.map((msg) => <ChatMessage key={msg.id} message={msg} />)}
+    <div className="wholeMainSection">
+      <div className="leftBar">
+        <h2>Channels</h2>
+      </div>
+      <div className="whole-container">
+        <main>
+          {messages &&
+            messages.map((msg) => <ChatMessage key={msg.id} message={msg} />)}
+          <span ref={dummy}></span>
+        </main>
 
-        <span ref={dummy}></span>
-      </main>
+        <form onSubmit={sendMessage} className="sendMessageDiv">
+          <input
+            value={formValue}
+            onChange={(e) => setFormValue(e.target.value)}
+            placeholder="message..."
+          />
 
-      <form onSubmit={sendMessage} className="sendMessageDiv">
-        <input
-          value={formValue}
-          onChange={(e) => setFormValue(e.target.value)}
-          placeholder="message..."
-        />
-
-        <button type="submit" disabled={!formValue}>
-          Send
-        </button>
-      </form>
-    </>
+          <button type="submit" disabled={!formValue}>
+            Send
+          </button>
+        </form>
+      </div>
+    </div>
   );
 }
 
 /************************************************************************* */
 
 function ChatMessage(props) {
-  const { text, uid } = props.message;
-
+  const { text, uid, photoURL } = props.message;
+  console.log(props);
   const messageClass = uid === auth.currentUser.uid ? "sent" : "received";
 
   return (
     <>
       <div className={`message ${messageClass}`}>
+        <img src={photoURL} alt="" />
         <p>{text}</p>
       </div>
     </>
