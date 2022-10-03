@@ -214,10 +214,61 @@ function ChatRoom() {
     dummy.current.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
   const dummy = useRef();
+
+  const [activeChannel, setActiveChannel] = useState("");
+  const [general, setGeneral] = useState(false);
+  const [sports, setSport] = useState(false);
+  const [education, setEducation] = useState(false);
+  const [game, setGame] = useState(false);
+  const removeStates = () => {
+    setGeneral(false);
+    setSport(false);
+    setEducation(false);
+    setGame(false);
+  };
+  console.log(activeChannel);
   return (
     <div className="wholeMainSection">
       <div className="leftBar">
         <h2>Channels</h2>
+        <div className="channel-list">
+          <span
+            className={general ? "channel active-channel" : "channel"}
+            onClick={() => {
+              removeStates();
+              setGeneral(true);
+            }}
+          >
+            General
+          </span>
+          <span
+            className={sports ? "channel active-channel" : "channel"}
+            onClick={() => {
+              removeStates();
+              setSport(true);
+            }}
+          >
+            Sports
+          </span>
+          <span
+            className={education ? "channel active-channel" : "channel"}
+            onClick={() => {
+              removeStates();
+              setEducation(true);
+            }}
+          >
+            Education
+          </span>
+          <span
+            className={game ? "channel active-channel" : "channel"}
+            onClick={() => {
+              removeStates();
+              setGame(true);
+            }}
+          >
+            Game
+          </span>
+        </div>
       </div>
       <div className="whole-container">
         <main>
@@ -246,7 +297,7 @@ function ChatRoom() {
 
 function ChatMessage(props) {
   const { text, uid, photoURL } = props.message;
-  console.log(props);
+
   const messageClass = uid === auth.currentUser.uid ? "sent" : "received";
 
   return (

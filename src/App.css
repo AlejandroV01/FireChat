@@ -373,3 +373,34 @@ p {
   border-bottom: white 2px solid;
   margin-bottom: 10px;
 }
+
+.leftBar h2 {
+  color: white;
+}
+.leftBar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.channel-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--black);
+  color: rgb(173, 173, 173);
+  border-radius: 10px;
+  width: fit-content;
+  gap: 30px;
+  padding: 10px 25px;
+}
+.channel {
+  text-decoration: none;
+  list-style: none;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.active-channel {
+  color: white;
+}
