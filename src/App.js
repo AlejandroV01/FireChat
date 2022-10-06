@@ -191,10 +191,24 @@ function SignOut() {
 /************************************************************************* */
 
 function ChatRoom() {
-  const messagesRef = firestore.collection("main");
-  const query = messagesRef.orderBy("createdAt").limit(25);
+  const mainRef = firestore.collection("general");
+  const mainQuery = mainRef.orderBy("createdAt").limit(25);
+  const [mainMessages] = useCollectionData(mainQuery, { idField: "id" });
 
-  const [messages] = useCollectionData(query, { idField: "id" });
+  const sportsRef = firestore.collection("sports");
+  const sportsQuery = sportsRef.orderBy("createdAt").limit(25);
+  const [sportsMessages] = useCollectionData(sportsQuery, { idField: "id" });
+
+  const educationRef = firestore.collection("education");
+  const educationQuery = educationRef.orderBy("createdAt").limit(25);
+  const [educationMessages] = useCollectionData(educationQuery, {
+    idField: "id",
+  });
+
+  const gameRef = firestore.collection("game");
+  const gameQuery = gameRef.orderBy("createdAt").limit(25);
+  const [gameMessages] = useCollectionData(gameQuery, { idField: "id" });
+
   const [formValue, setFormValue] = useState("");
 
   const sendMessage = async (e) => {
@@ -202,7 +216,7 @@ function ChatRoom() {
 
     const { uid, photoURL } = auth.currentUser;
 
-    await messagesRef.add({
+    await mainRef.add({
       text: formValue,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       uid,
@@ -212,10 +226,9 @@ function ChatRoom() {
   };
   useEffect(() => {
     dummy.current.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  }, [mainMessages]);
   const dummy = useRef();
 
-  const [activeChannel, setActiveChannel] = useState("");
   const [general, setGeneral] = useState(false);
   const [sports, setSport] = useState(false);
   const [education, setEducation] = useState(false);
@@ -226,7 +239,12 @@ function ChatRoom() {
     setEducation(false);
     setGame(false);
   };
-  console.log(activeChannel);
+  useEffect(() => {
+    setTimeout(() => {
+      setGeneral(true);
+    }, 1000);
+  }, []);
+
   return (
     <div className="wholeMainSection">
       <div className="leftBar">
@@ -272,8 +290,22 @@ function ChatRoom() {
       </div>
       <div className="whole-container">
         <main>
-          {messages &&
-            messages.map((msg) => <ChatMessage key={msg.id} message={msg} />)}
+          {general &&
+            mainMessages.map((msg) => (
+              <ChatMessage key={msg.id} message={msg} />
+            ))}
+          {sports &&
+            sportsMessages.map((msg) => (
+              <ChatMessage key={msg.id} message={msg} />
+            ))}
+          {education &&
+            educationMessages.map((msg) => (
+              <ChatMessage key={msg.id} message={msg} />
+            ))}
+          {game &&
+            gameMessages.map((msg) => (
+              <ChatMessage key={msg.id} message={msg} />
+            ))}
           <span ref={dummy} className="dummy"></span>
         </main>
 

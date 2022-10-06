@@ -91,11 +91,18 @@ main::-webkit-scrollbar-thumb {
   font-size: 1.5rem;
   background: rgb(58, 58, 58);
   width: 80%;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+.sendMessageDiv input {
+  border-radius: 10px;
 }
 
 .sendMessageDiv button {
   background-color: rgb(56, 56, 143);
   width: 20%;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 .guest-login {
   padding: 0;
