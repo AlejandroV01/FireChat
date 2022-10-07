@@ -5,8 +5,9 @@ import { motion } from "framer-motion";
 import React, { useEffect, useRef, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
-import { AiOutlineMail } from "react-icons/ai";
-import { FiLock } from "react-icons/fi";
+import { AiFillEdit, AiOutlineMail } from "react-icons/ai";
+import { FaSignOutAlt } from "react-icons/fa";
+import { FiLock, FiSend } from "react-icons/fi";
 import { HiOutlineX } from "react-icons/hi";
 import "./App.css";
 import google from "./google.png";
@@ -26,14 +27,29 @@ const firestore = firebase.firestore();
 /************************************************************************* */
 function App() {
   const [user] = useAuthState(auth);
-
+  const [edit, setEdit] = useState(false);
+  const [name, setName] = useState("");
   return (
     <div className="App">
       <header>
         <h1>FireChat🔥</h1>
+        <div className="display-title">
+          <h3>Display Name:</h3>
+          <div className="display-name">
+            <input
+              type="text"
+              placeholder="display name..."
+              onChange={(e) => setName(e.target.value)}
+              disabled={edit ? false : true}
+            />
+            <button onClick={() => setEdit(!edit)}>
+              <AiFillEdit size={25} />
+            </button>
+          </div>
+        </div>
         <SignOut />
       </header>
-      <section>{user ? <ChatRoom /> : <SignIn />}</section>
+      <section>{user ? <ChatRoom name={name} /> : <SignIn />}</section>
     </div>
   );
 }
@@ -182,7 +198,7 @@ function SignOut() {
   return (
     auth.currentUser && (
       <button onClick={() => auth.signOut()} className="sign-out-btn">
-        Sign Out
+        <FaSignOutAlt size={30} style={{ padding: "0 5px" }} />
       </button>
     )
   );
@@ -210,7 +226,7 @@ function ChatRoom() {
   const [gameMessages] = useCollectionData(gameQuery, { idField: "id" });
 
   const [formValue, setFormValue] = useState("");
-
+  const [name, setName] = useState("Kevin");
   const sendMessage = async (e) => {
     e.preventDefault();
 
@@ -221,6 +237,7 @@ function ChatRoom() {
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       uid,
       photoURL,
+      name,
     });
     setFormValue("");
   };
@@ -317,7 +334,7 @@ function ChatRoom() {
           />
 
           <button type="submit" disabled={!formValue}>
-            Send
+            <FiSend size={30} />
           </button>
         </form>
       </div>
@@ -328,15 +345,17 @@ function ChatRoom() {
 /************************************************************************* */
 
 function ChatMessage(props) {
-  const { text, uid, photoURL } = props.message;
+  const { text, uid, name } = props.message;
 
   const messageClass = uid === auth.currentUser.uid ? "sent" : "received";
 
   return (
     <>
       <div className={`message ${messageClass}`}>
-        <img src={photoURL || ""} alt="profile display" />
-        <p>{text}</p>
+        <div className="messageBubble">
+          <span>{name}</span>
+          <p>{text}</p>
+        </div>
       </div>
     </>
   );
