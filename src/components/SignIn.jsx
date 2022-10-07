@@ -4,8 +4,8 @@ import React, { useState } from "react";
 import { AiOutlineMail } from "react-icons/ai";
 import { FiLock } from "react-icons/fi";
 import { HiOutlineX } from "react-icons/hi";
-import google from "./google.png";
-
+import "../App.css";
+import google from "../google.png";
 const SignIn = ({ auth, firestore }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

@@ -217,6 +217,10 @@ p {
 }
 .sent {
   flex-direction: row-reverse;
+  margin-right: 20px;
+}
+.received {
+  margin-left: 20px;
 }
 
 .sent p {
@@ -466,11 +470,11 @@ p {
 }
 
 .display-name {
-  background-color: var(--lightBlack);
   height: 35px;
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 10px;
 }
 
 .display-name input {
@@ -486,6 +490,10 @@ p {
   background-color: var(--yellow);
   color: black;
   cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .display-title h3 {
