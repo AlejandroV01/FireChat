@@ -42,6 +42,11 @@ body {
   padding: 10px 50px;
   box-sizing: border-box;
 }
+.title-div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .App section {
   display: flex;
@@ -56,7 +61,6 @@ body {
 .leftBar {
   margin-top: 10vh;
   width: 20%;
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -135,7 +139,28 @@ main::-webkit-scrollbar-thumb {
 .dummy {
   padding-bottom: 10px;
 }
-
+@media (max-width: 600px) {
+  .title-no-emoji {
+    display: none;
+  }
+  .App header {
+    padding: 10px 20px;
+  }
+  .leftBar {
+    width: 40%;
+  }
+  .sendMessageDiv {
+    width: 80%;
+  }
+}
+@media (max-width: 420px) {
+  .display-title h3 {
+    display: none;
+  }
+  .display-name input {
+    width: 100px;
+  }
+}
 ul,
 li {
   text-align: left;

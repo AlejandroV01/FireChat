@@ -7,8 +7,10 @@ const Header = ({ handleNameChange, user, name }) => {
   console.log(name);
   return (
     <header>
-      <h1>FireChat🔥</h1>
-
+      <div className="title-div">
+        <h1 className="title-no-emoji">FireChat</h1>
+        <h1>🔥</h1>
+      </div>
       {user && (
         <div className="display-title">
           <h3>Display Name: {name}</h3>
