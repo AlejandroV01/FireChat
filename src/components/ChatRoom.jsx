@@ -33,13 +33,38 @@ const ChatRoom = ({ name, handleNameChange }) => {
     e.preventDefault();
 
     const { uid } = auth.currentUser;
+    if (general) {
+      await mainRef.add({
+        text: formValue,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        uid,
+        name,
+      });
+    } else if (sports) {
+      await sportsRef.add({
+        text: formValue,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        uid,
+        name,
+      });
+    } else if (education) {
+      await educationRef.add({
+        text: formValue,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        uid,
+        name,
+      });
+    } else if (game) {
+      await gameRef.add({
+        text: formValue,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        uid,
+        name,
+      });
+    } else {
+      alert("error in uploading message");
+    }
 
-    await mainRef.add({
-      text: formValue,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      uid,
-      name,
-    });
     setFormValue("");
   };
   useEffect(() => {
