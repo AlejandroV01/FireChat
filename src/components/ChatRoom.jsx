@@ -1,11 +1,12 @@
 import firebase from "firebase/compat/app";
 import React, { useEffect, useRef, useState } from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
+import { BsCheck } from "react-icons/bs";
 import { FiSend } from "react-icons/fi";
 import "../App.css";
 import ChatMessage from "./ChatMessage";
 
-const ChatRoom = ({ name }) => {
+const ChatRoom = ({ name, handleNameChange }) => {
   const auth = firebase.auth();
   const firestore = firebase.firestore();
   const mainRef = firestore.collection("general");
@@ -56,6 +57,33 @@ const ChatRoom = ({ name }) => {
     setEducation(false);
     setGame(false);
   };
+  const [isPopup, setIsPopup] = useState(true);
+  const displayNamePopup = () => {
+    return (
+      <div>
+        {isPopup && (
+          <div>
+            <div className="overlay-pop"></div>
+            <div className="name-popup">
+              <h2>Enter a Display Name:</h2>
+              <div className="display-name-pop">
+                <form action="">
+                  <input
+                    type="text"
+                    placeholder="display name..."
+                    onChange={(e) => handleNameChange(e)}
+                  />
+                  <button onClick={() => setIsPopup(false)} type="submit">
+                    <BsCheck size={25} />
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
   useEffect(() => {
     setTimeout(() => {
       setGeneral(true);
@@ -64,6 +92,7 @@ const ChatRoom = ({ name }) => {
 
   return (
     <div className="wholeMainSection">
+      {displayNamePopup()}
       <div className="leftBar">
         <h2>Channels</h2>
         <div className="channel-list">

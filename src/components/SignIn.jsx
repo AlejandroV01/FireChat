@@ -6,7 +6,9 @@ import { FiLock } from "react-icons/fi";
 import { HiOutlineX } from "react-icons/hi";
 import "../App.css";
 import google from "../google.png";
-const SignIn = ({ auth, firestore }) => {
+const SignIn = () => {
+  const auth = firebase.auth();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const signInWithGoogle = () => {

@@ -30,8 +30,14 @@ function App() {
 
   return (
     <div className="App">
-      <Header handleNameChange={handleNameChange} />
-      <section>{user ? <ChatRoom name={name} /> : <SignIn />}</section>
+      <Header handleNameChange={handleNameChange} user={user} />
+      <section>
+        {user ? (
+          <ChatRoom name={name} handleNameChange={handleNameChange} />
+        ) : (
+          <SignIn />
+        )}
+      </section>
     </div>
   );
 }
