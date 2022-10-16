@@ -3,7 +3,6 @@ import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-
 import "./App.css";
 import ChatRoom from "./components/ChatRoom";
 import Header from "./components/Header";
@@ -28,23 +27,6 @@ function App() {
     setName(e.target.value);
   };
 
-  const [error, setError] = useState("");
-  const signUp = (e) => {
-    e.preventDefault();
-    if (password.length < 6) {
-      alert("Password must be above 6 characters");
-    }
-    console.log(password);
-    if (email && password) {
-      auth.createUserWithEmailAndPassword(email, password).catch((error) => {
-        let errorMessage = error.message;
-
-        console.log(errorMessage);
-        setError(errorMessage);
-      });
-    }
-  };
-  const [popup, setPopup] = useState(false);
   return (
     <div className="App">
       <Header handleNameChange={handleNameChange} user={user} name={name} />
