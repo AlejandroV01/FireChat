@@ -169,6 +169,7 @@ p {
 
 .sign-in img {
   width: 30px;
+  margin-right: 5px;
 }
 .left-sign-in {
   background-image: url(./leftSignIn.jpg);

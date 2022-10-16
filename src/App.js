@@ -64,7 +64,6 @@ function SignIn() {
     if (email && password) {
       auth.createUserWithEmailAndPassword(email, password).catch((error) => {
         let errorMessage = error.message;
-
         console.log(errorMessage);
         setError(errorMessage);
       });
